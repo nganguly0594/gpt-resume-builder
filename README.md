@@ -1,0 +1,1 @@
+This is a prototype ChatGPT application capable of producing a single page resume with some information about the user.
