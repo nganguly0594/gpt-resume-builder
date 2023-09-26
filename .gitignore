@@ -3,6 +3,3 @@ config.py
 
 #cache
 __pycache__/
-
-#test
-test.py
