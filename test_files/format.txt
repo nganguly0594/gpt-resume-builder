@@ -1,0 +1,19 @@
+Name?
+Location? (City, State)
+Phone Number?
+Email?
+Important Links? (Linkedin, Github, Personal Website, etc.)
+Education?
+    School?
+    Graduation Year? (Ex. 2027)
+    Major and Degree Type? (Ex. B.S. in Computer Science)
+    Relevant Courses? (Ex. Data Structures)
+        Course?
+        Course?
+        Course?
+    Any achievements or awards? (Ex. Dean's List)
+Skills? (Ex. Hard and Soft Skills)
+Certifications or Licenses? (N/A if none)
+Work Experience? (Make sure to include company name, month and year worked at the position or specify if still working, role at company, job description)
+Projects?
+Activities or Volunteer?

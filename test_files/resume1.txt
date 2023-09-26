@@ -1,0 +1,14 @@
+Name: Neil Ganguly
+Phone Number: +1 (331) 444-9928
+Email: neilganguly2015@gmail.com
+Important Links: [github.com/nganguly0594, linkedin.com/in/neil-ganguly/]
+Education History:
+[University of Illinois Urbana-Champaign, 2027, B.S. Computer Science, [CS128, CS173, CS233, CS440]]
+Skills: Java, Python, C++, CSS, HTML, Keras, Tensorflow, FlickrAPI, Sass, Git
+Certifications or Licenses: N/A
+Work Experience:
+I worked at a company called Spotline as a Software Engineer Intern where I worked from May to August in 2022 and I completed a project where I used the scikit-learn models to create classifiers and regressor models and preprocess data and I worked with Python libraries like Pandas, Numpy, Matplotlib, Seaborn, and SciPy.
+Projects:
+I completed a project called Nut Guardian from January of 2023 to May where I developed a birdfeeder which had a raspberry pi module and I used the Tensorflow and Keras libraries to implement a convolutional neural network that could identify birds and squirrels.
+Activities and Volunteer:
+N/A

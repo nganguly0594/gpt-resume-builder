@@ -1,2 +1,5 @@
-#api keys
+#api key
 config.py
+
+#cache
+__pycache__/
