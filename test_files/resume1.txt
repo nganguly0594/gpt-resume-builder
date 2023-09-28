@@ -1,14 +1,30 @@
-Name: Neil Ganguly
-Phone Number: +1 (331) 444-9928
-Email: neilganguly2015@gmail.com
-Important Links: [github.com/nganguly0594, linkedin.com/in/neil-ganguly/]
+Name: Giana Xiao
+
+Location: Naperville, IL, US
+
+Phone Number: +1 (331) 701-1688
+
+Email: gianaxiao@gmail.com
+
+Important Links: www.linkedin.com/in/giana-xiao/
+
+Skills: English, Chinese, Spanish, Efficiency, Teamwork, Adaptability, Critical Thinking, HIPAA Compliance, Taking Vitals, Bloodwork Preparation, Pharmacy Technician, CPR Training
+
 Education History:
-[University of Illinois Urbana-Champaign, 2027, B.S. Computer Science, [CS128, CS173, CS233, CS440]]
-Skills: Java, Python, C++, CSS, HTML, Keras, Tensorflow, FlickrAPI, Sass, Git
-Certifications or Licenses: N/A
+I go to University of Illinois Urbana-Champaign, my expected graduation is May 2027, I'm getting a BSLAS degree in MCB, and some relevant courses I'm taking are Integrative Biology and Statistics for Biology. My GPA is 3.9/4.0 and I was on the Dean's List in 2019 and 2020.
+
 Work Experience:
-I worked at a company called Spotline as a Software Engineer Intern where I worked from May to August in 2022 and I completed a project where I used the scikit-learn models to create classifiers and regressor models and preprocess data and I worked with Python libraries like Pandas, Numpy, Matplotlib, Seaborn, and SciPy.
+At CVS Pharmacy in Woodridge, IL, I worked as a Pharmacy Technician from December 2022 to August 2023. In this role, I prioritized providing excellent customer service to patients by addressing their medication and insurance-related queries. My responsibilities included overseeing various pharmacy areas, such as the pick-up kiosk, drive-thru lane, and packaging stations. I prepared medications for patients by accurately counting, pouring, labeling, and verifying doses. Additionally, I entered patient profiles, billing information, and prescription orders into the pharmacy's software system, ensuring efficient and accurate record-keeping and medication dispensing.
+
+At Villa St. Benedict in Lisle, IL, I worked as both a Server and Resident Assistant from August 2021 to October 2022. My role involved catering to the needs of residents within the on-site restaurant, where I aimed to create a positive and efficient dining experience. I interacted with older residents with patience and provided them with attentive and respectful service. In addition to my serving responsibilities, I also played a crucial part in training new servers, contributing to their successful onboarding and helping maintain the high standards of service at the facility.
+
+I served as a Medical Assistant Intern at Stat! Cardiologist in Lisle, IL, during the period of May 2021 to August 2021. In this role, I worked closely with a Nurse Practitioner, offering valuable support during a range of cardiac medical procedures. My responsibilities included gathering comprehensive patient histories and recording vital signs meticulously, ensuring the availability of detailed records for use in diagnosis and prognosis. I also demonstrated a strong commitment to safety protocols by preparing patient blood samples for laboratory work, highlighting my meticulous attention to detail in this critical aspect of patient care.
+
+At Dr. Rubin’s Mini Medical School in Naperville, IL, I worked as a Medical Apprentice from December 2020 to January 2021. During my tenure, I displayed a keen aptitude for surgical techniques in hands-on sessions, emphasizing precision through activities like dissections, suturing, and laparoscopic surgery simulations. Additionally, I enriched my medical knowledge by participating in a series of informative lectures that covered diverse medical and healthcare topics, including cardiology, neurology, and OB-GYN. This experience allowed me to gain practical skills and a broad understanding of various aspects of the medical field.
+
 Projects:
-I completed a project called Nut Guardian from January of 2023 to May where I developed a birdfeeder which had a raspberry pi module and I used the Tensorflow and Keras libraries to implement a convolutional neural network that could identify birds and squirrels.
+
 Activities and Volunteer:
-N/A
+I held a leadership position at Naperville Central DECA in Naperville: (September 2020 - May 2023) I was the VP of Service and in this role, I actively reached out to event coordinators and volunteer groups to establish collaborations, successfully organizing more than 15 service opportunities. My dedication to service allowed our club to make a meaningful impact in the community. I diligently maintained attendance and financial records, ensuring the smooth functioning of the club. I also provided essential organizational support to fellow board members.
+
+As an Executive Board Member at the Naperville Central Medical Club in Naperville, IL, from August 2021 to May 2023, my primary responsibility was delivering regular, informative presentations on a weekly basis. These presentations were designed to engage and inform participants in the Medical Club throughout the year. My role involved facilitating discussions and sharing valuable insights, contributing to the educational and interactive aspects of the club's activities.

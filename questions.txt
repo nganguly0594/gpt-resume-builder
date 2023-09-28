@@ -1,0 +1,10 @@
+What is your first and last name? 
+Which city are you located? 
+What is your phone number? 
+What is your email? 
+Any important links? List them out! (LinkedIn, Github, Facebook, Personal Website, etc.) 
+What skills do you have? (These can include hard skills like foreign languages, programming languages, experience using certain interfaces, etc. or soft skills like communication, critical thinking, time management, etc. or certifications and licenses like CPR certified, or programming certification, etc.) 
+What is your education history? Make sure to include your school name, expected month and year of graduation (Ex. May 2025), major and degree type (Ex. B.S. in Computer Science), relevant courses (Ex. Data Structures), and achievements and awards (Ex. Dean's List). 
+What experience do you have? This can be work experiences or anything similar related to your major that you want to showcase. Make sure to include company name, month and year worked at the position or specify if still working, role at company, and a few sentences describing your job. Write a separate paragraph per experience. (Tip: Include buzzwords such as the technologies or skills you used, or statistics about your work's efficacy/accuracy, etc.) 
+What projects have you completed? Make sure to include project name, month and year worked on the project or specify if still working, and a few sentences describing the project. Write a separate paragraph per project. (Tip: Include buzzwords such as the technologies or skills you used, or statistics about your project's efficacy/accuracy, etc.) 
+What activities or volunteer experiences do you have? Make sure to include name of activity/experience, month and years participating or specify if ongoing, and a few sentences describing the activity/experience. Write a separate paragraph per activity/experience. (Tip: Include buzzwords such as the technologies or skills you used, or statistics about your activity/experience's efficacy/accuracy, etc.) 
