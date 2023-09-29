@@ -1,5 +1,6 @@
 import openai
 import config
+from pdf_creator import createPDF
 
 #API key to use OpenAI
 openai.api_key = config.OPENAI_API_KEY
@@ -27,7 +28,7 @@ with open('questions.txt', 'r') as f:
 def ask(QUESTION_NUMBER):
     question = questions[QUESTION_NUMBER].strip() + ' '
     return input(question)
-'''
+
 name = ask(0)
 print()
 location = ask(1)
@@ -63,31 +64,6 @@ projects = collect_long_answers(8)
 print()
 activities = collect_long_answers(9)
 print()
-'''
-
-name = "Giana Xiao"
-
-location = "Naperville, IL, US"
-
-phone_number = "+1 (331) 701-1688"
-
-email = "gianaxiao@gmail.com"
-
-important_links = "www.linkedin.com/in/giana-xiao/"
-
-skills = "English, Chinese, Spanish, Efficiency, Teamwork, Adaptability, Critical Thinking, HIPAA Compliance, Taking Vitals, Bloodwork Preparation, Pharmacy Technician, CPR Training"
-
-education = "I go to University of Illinois Urbana-Champaign, my expected graduation is May 2027, I'm getting a BSLAS degree in MCB, and some relevant courses I'm taking are Integrative Biology and Statistics for Biology. My GPA is 3.9/4.0 and I was on the Dean's List in 2019 and 2020."
-
-experiences = ["At CVS Pharmacy in Woodridge, IL, I worked as a Pharmacy Technician from December 2022 to August 2023. In this role, I prioritized providing excellent customer service to patients by addressing their medication and insurance-related queries. My responsibilities included overseeing various pharmacy areas, such as the pick-up kiosk, drive-thru lane, and packaging stations. I prepared medications for patients by accurately counting, pouring, labeling, and verifying doses. Additionally, I entered patient profiles, billing information, and prescription orders into the pharmacy's software system, ensuring efficient and accurate record-keeping and medication dispensing.",
-               "At Villa St. Benedict in Lisle, IL, I worked as both a Server and Resident Assistant from August 2021 to October 2022. My role involved catering to the needs of residents within the on-site restaurant, where I aimed to create a positive and efficient dining experience. I interacted with older residents with patience and provided them with attentive and respectful service. In addition to my serving responsibilities, I also played a crucial part in training new servers, contributing to their successful onboarding and helping maintain the high standards of service at the facility.",
-               "I served as a Medical Assistant Intern at Stat! Cardiologist in Lisle, IL, during the period of May 2021 to August 2021. In this role, I worked closely with a Nurse Practitioner, offering valuable support during a range of cardiac medical procedures. My responsibilities included gathering comprehensive patient histories and recording vital signs meticulously, ensuring the availability of detailed records for use in diagnosis and prognosis. I also demonstrated a strong commitment to safety protocols by preparing patient blood samples for laboratory work, highlighting my meticulous attention to detail in this critical aspect of patient care.",
-               "At Dr. Rubin’s Mini Medical School in Naperville, IL, I worked as a Medical Apprentice from December 2020 to January 2021. During my tenure, I displayed a keen aptitude for surgical techniques in hands-on sessions, emphasizing precision through activities like dissections, suturing, and laparoscopic surgery simulations. Additionally, I enriched my medical knowledge by participating in a series of informative lectures that covered diverse medical and healthcare topics, including cardiology, neurology, and OB-GYN. This experience allowed me to gain practical skills and a broad understanding of various aspects of the medical field."]
-
-projects = []
-
-activities = ["I held a leadership position at Naperville Central DECA in Naperville: (September 2020 - May 2023) I was the VP of Service and in this role, I actively reached out to event coordinators and volunteer groups to establish collaborations, successfully organizing more than 15 service opportunities. My dedication to service allowed our club to make a meaningful impact in the community. I diligently maintained attendance and financial records, ensuring the smooth functioning of the club. I also provided essential organizational support to fellow board members.",
-              "As an Executive Board Member at the Naperville Central Medical Club in Naperville, IL, from August 2021 to May 2023, my primary responsibility was delivering regular, informative presentations on a weekly basis. These presentations were designed to engage and inform participants in the Medical Club throughout the year. My role involved facilitating discussions and sharing valuable insights, contributing to the educational and interactive aspects of the club's activities."]
 
 #All the following code is to format the info for exporting to pdf
 
@@ -170,10 +146,10 @@ education_date_prompt = """\"\"\"\n""" + education + """\n\"\"\"
 Extract the above graduation date into the same format as below:
 
 \"\"\"
-Expected Graduation Feb 2005
+Expected Feb 2005
 \"\"\"
 
-Return EXACTLY 4 words including expected graduation and no punctuation.
+Return EXACTLY 3 words including expected and no punctuation.
 """
 formatted_education = generate(education_prompt, 75)
 extracted_education_date = generate(education_date_prompt, 10)
@@ -209,7 +185,7 @@ def format_experience(EXPERIENCE):
     lines = unprocessed_experience.split("\n")
     filtered_lines = []
     for line in lines:
-        if not line.strip().isspace() and not '\"\"\"' in line:
+        if not len(line.strip()) == 0 and not '"""' in line:
             filtered_lines.append(line)
 
 
@@ -252,13 +228,13 @@ def format_project(PROJECT):
     lines = unprocessed_project.split("\n")
     filtered_lines = []
     for line in lines:
-        if not line.strip().isspace() and not '\"\"\"' in line:
+        if not len(line.strip()) == 0 and not '"""' in line:
             filtered_lines.append(line)
 
 
-    experience_list = ["\n".join(filtered_lines), generate(project_date_prompt, 10)]
+    project_list = ["\n".join(filtered_lines), generate(project_date_prompt, 10)]
 
-    return experience_list
+    return project_list
 
 formatted_projects = []
 
@@ -271,23 +247,20 @@ formatted_activities = []
 for activity in activities:
     formatted_activities.append(format_experience(activity))
 
-print("\nName:\n", extracted_name)
-print("\nContact Info:\n", formatted_contact_info)
-print("\nProfessional Summary:\n", synthesized_summary)
-print("\nSkills:\n", organized_skills)
-print("\nEducation History:\n", formatted_education)
-print("\nWork Experiences:\n")
-for i in formatted_experiences:
-    print(i[1])
-    print(i[0])
-    print()
-print("\nProjects:\n")
-for i in formatted_projects:
-    print(i[1])
-    print(i[0])
-    print()
-print("\nActivities and Volunteer Experiences:\n")
-for i in formatted_activities:
-    print(i[1])
-    print(i[0])
-    print()
+#Compile all the information
+FULLCONTENTLIST = {'Name': extracted_name,
+                   'Contact Info': formatted_contact_info,
+                   'Summary': synthesized_summary,
+                   'Skills': organized_skills,
+                   'Education': formatted_education,
+                   'Education Date': extracted_education_date,
+                   'Work Experiences': formatted_experiences}
+
+if not len(formatted_projects) == 0:
+    FULLCONTENTLIST['Projects'] = formatted_projects
+
+if not len(formatted_activities) == 0:
+    FULLCONTENTLIST['Activities'] = formatted_activities
+
+#Build the PDF
+createPDF(FULLCONTENTLIST)

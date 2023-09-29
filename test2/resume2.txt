@@ -8,10 +8,10 @@ Email: my email issss neilganguly2015@gmail.com
 
 Important Links: some links are github.com/nganguly0594 and linkedin.com/in/neil-ganguly/ hahahaha
 
+Skills: java, python, c++, css, html. i also have used keras, tensorflow, flickrAPI, sass, and i also know how to use git
+
 Education History:
 i go to uiuc, my expected graduation is in may of 2026, I'm getting a bachelor in science in CS, and some cool courses I'm taking are Data Structures, Linear Algebra, and Computer Architecture.
-
-Skills: java, python, c++, css, html. i also have used keras, tensorflow, flickrAPI, sass, and i also know how to use git
 
 Work Experience:
 i worked at a company called spotline as a software enginner intern where i worked from may to august in 2022 and i completed a project where i used the scikit-lean models to create classifiers and regressor models and preproces data and i worked with python libraries like pandas, numppy, matplotlib, seborn, and scipi.
