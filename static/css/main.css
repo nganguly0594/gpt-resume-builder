@@ -24,6 +24,7 @@ body {
     width: 66.67%;
     padding: 0px 20px 20px 0px;
     overflow-y: auto;
+    overflow-x: hidden;
     box-sizing: border-box;
     position: relative;
 }
@@ -45,6 +46,16 @@ textarea {
     padding: 10px;
     width: 90%;
     margin-top: 10px;
+    height: 40px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.important-skills textarea, .education-history textarea {
+    height: 80px;
+}
+
+fieldset textarea {
+    height: 120px;
 }
 
 label {
@@ -88,6 +99,7 @@ fieldset {
     padding: 10px 20px;
     margin-top: 10px;
     cursor: pointer;
+    margin-left: 20px;
 }
 
 img {
