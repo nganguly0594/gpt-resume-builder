@@ -7,7 +7,6 @@ certifi==2023.7.22
 charset-normalizer==3.2.0
 click==8.1.7
 Flask==2.3.3
-Flask-SQLAlchemy==3.1.1
 frozenlist==1.4.0
 gunicorn==21.2.0
 idna==3.4
@@ -18,11 +17,10 @@ multidict==6.0.4
 openai==0.28.0
 packaging==23.1
 Pillow==10.0.1
+pip-autoremove==0.10.0
 reportlab==4.0.5
 requests==2.31.0
-SQLAlchemy==2.0.21
 tqdm==4.66.1
-typing_extensions==4.8.0
 urllib3==2.0.5
 Werkzeug==2.3.7
 yarl==1.9.2
