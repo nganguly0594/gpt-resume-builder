@@ -63,10 +63,6 @@ def process_info(INFOLIST):
 
     activities = filter_none_strings(unfiltered_activities)
 
-    print("CHECKPOINT 1 PASSED!")
-    print(len(activities))
-    print()
-
     #All the following code is to format the info for exporting to pdf
 
     #Name extraction
@@ -77,10 +73,6 @@ def process_info(INFOLIST):
     Respond in ONLY 2 words with the name in the above text without punctuation.
     """
     extracted_name = generate(name_prompt, 10)
-
-    print("CHECKPOINT 2 PASSED!")
-    print(extracted_name)
-    print()
 
     #Contact info formatting
     contact_prompt = """\"\"\"
@@ -96,10 +88,6 @@ def process_info(INFOLIST):
     The links shouldn't be linked and if the full home address is provided then only take the city and get the state and country from that. Return it without saying anything else and not in code.
     """
     formatted_contact_info = generate(contact_prompt, 80)
-
-    print("CHECKPOINT 3 PASSED!")
-    print(formatted_contact_info)
-    print()
 
     #Professional summary synthesis
     summary_prompt = """\"\"\"\nEducation History:\n""" + education + """\nSkills:\n""" + skills + """\nWork Experience:\n"""
@@ -127,10 +115,6 @@ def process_info(INFOLIST):
     """
     synthesized_summary = generate(summary_prompt, 100)
 
-    print("CHECKPOINT 4 PASSED!")
-    print(synthesized_summary)
-    print()
-
     #Skills organization
     skills_prompt = """\"\"\"\n""" + skills + """\n\"\"\"
 
@@ -145,10 +129,6 @@ def process_info(INFOLIST):
     The skill sections can include things such as Languages, Competencies, Professional Skills, Certifications, and Licenses. Make sure the similar skills are on the same line as the category title. Return it without saying anything else.
     """
     organized_skills = generate(skills_prompt, 100)
-
-    print("CHECKPOINT 5 PASSED!")
-    print(organized_skills)
-    print()
 
     #Education formatting
     education_prompt = """\"\"\"\n""" + education + """\n\"\"\"
@@ -175,10 +155,6 @@ def process_info(INFOLIST):
     """
     formatted_education = generate(education_prompt, 75)
     extracted_education_date = generate(education_date_prompt, 10)
-
-    print("CHECKPOINT 6 PASSED!")
-    print(extracted_education_date, formatted_education)
-    print()
 
     #Experience formatting
     def format_experience(EXPERIENCE):
@@ -224,10 +200,6 @@ def process_info(INFOLIST):
     for work in experiences:
         formatted_experiences.append(format_experience(work))
 
-    print("CHECKPOINT 7 PASSED!")
-    print(len(formatted_experiences))
-    print()
-
     #Project formatting
     def format_project(PROJECT):
         project_prompt = """\"\"\"\n""" + PROJECT + """\n\"\"\"
@@ -271,19 +243,11 @@ def process_info(INFOLIST):
     for project in projects:
         formatted_projects.append(format_project(project))
 
-    print("CHECKPOINT 8 PASSED!")
-    print(len(formatted_projects))
-    print()
-
     #Activity formatting
     formatted_activities = []
 
     for activity in activities:
         formatted_activities.append(format_experience(activity))
-
-    print("CHECKPOINT 9 PASSED!")
-    print(len(formatted_activities))
-    print()
 
     #Compile all the information
     FULLCONTENTLIST = {'Name': extracted_name,
