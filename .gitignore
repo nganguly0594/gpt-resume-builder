@@ -1,8 +1,9 @@
 #api key
 config.py
 
-#cache
+#ignore
 __pycache__/
+.DS_Store
 
 #test file
 test.py
