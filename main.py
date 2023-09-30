@@ -1,10 +1,9 @@
 import openai
-import config
 from pdf_creator import createPDF
 
 def process_info(INFOLIST):
     #API key to use OpenAI
-    openai.api_key = config.OPENAI_API_KEY
+    openai.api_key = os.getenv(OPENAI_API_KEY)
 
     #Text generation function
     def generate(PROMPT, MAX_TOKENS):
