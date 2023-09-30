@@ -56,14 +56,14 @@ def createPDF(CONTENTLIST):
     def filter_string(input_string):
         lines = input_string.splitlines()
 
-        filtered_lines = [line for line in lines if '"' not in line and not len(line.strip()) == 0]
+        filtered_lines = [line for line in lines if '"""' not in line]
 
         result_string = '\n'.join(filtered_lines)
 
         return result_string
 
     #Adds the name of the user
-    flowables.append(Paragraph(filter_string(CONTENTLIST['Name']), style=custom_styles['Title']))
+    flowables.append(Paragraph(filter_string(CONTENTLIST['Name']).replace('"', ''), style=custom_styles['Title']))
     flowables.append(Spacer(1, 11))
 
     #Adds the user's contact info
