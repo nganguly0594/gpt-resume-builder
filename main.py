@@ -2,265 +2,303 @@ import openai
 import config
 from pdf_creator import createPDF
 
-#API key to use OpenAI
-openai.api_key = config.OPENAI_API_KEY
+def process_info(INFOLIST):
+    #API key to use OpenAI
+    openai.api_key = config.OPENAI_API_KEY
 
-#Text generation function
-def generate(PROMPT, MAX_TOKENS):
-    response = openai.Completion.create(
-        #Newest free GPT model
-        model='gpt-3.5-turbo-instruct',
+    #Text generation function
+    def generate(PROMPT, MAX_TOKENS):
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": PROMPT}
+            ],
+            max_tokens=MAX_TOKENS
+        )
+        
+        return response['choices'][0]['message']['content'].strip()
 
-        #Customized prompt
-        prompt=PROMPT,
+    name = INFOLIST['name']
+    location = INFOLIST['city']
+    phone_number = INFOLIST['phone']
+    email = INFOLIST['email']
+    important_links = INFOLIST.get('links', 'none')
+    skills = INFOLIST['skills']
+    education = INFOLIST['education']
 
-        #Maximum number of tokens for response
-        max_tokens=MAX_TOKENS
-    )
-    
-    return response['choices'][0].text.strip()
+    def filter_none_strings(input_list):
+        new_list = []
 
-#Get all the required information from the user
-with open('questions.txt', 'r') as f:
-    questions = f.readlines()
+        for i in input_list:
+            if not 'none' in i and len(i.strip()) > 0:
+                new_list.append(i)
+        
+        return new_list
 
-#Pose question to user
-def ask(QUESTION_NUMBER):
-    question = questions[QUESTION_NUMBER].strip() + ' '
-    return input(question)
+    work1 = INFOLIST.get('experience-one', 'none')
+    work2 = INFOLIST.get('experience-two', 'none')
+    work3 = INFOLIST.get('experience-three', 'none')
+    work4 = INFOLIST.get('experience-four', 'none')
 
-name = ask(0)
-print()
-location = ask(1)
-print()
-phone_number = ask(2)
-print()
-email = ask(3)
-print()
-important_links = ask(4)
-print()
-skills = ask(5)
-print()
-education = ask(6)
-print()
+    unfiltered_experiences = [work1, work2, work3, work4]
 
-#Used to collect long answer question responses
-def collect_long_answers(QUESTION_NUMBER):
-    answers = []
-    
-    print(questions[QUESTION_NUMBER].strip() + ' ')
+    experiences = filter_none_strings(unfiltered_experiences)
 
-    while True:
-        experience = input("\nPlease provide your experience or type 'Done' to finish:\n")
-        if experience.strip().lower() == 'done':
-            break
-        answers.append(experience)
-    
-    return answers
+    proj1 = INFOLIST.get('project-one', 'none')
+    proj2 = INFOLIST.get('project-two', 'none')
+    proj3 = INFOLIST.get('project-three', 'none')
+    proj4 = INFOLIST.get('project-four', 'none')
 
-experiences = collect_long_answers(7)
-print()
-projects = collect_long_answers(8)
-print()
-activities = collect_long_answers(9)
-print()
+    unfiltered_projects = [proj1, proj2, proj3, proj4]
 
-#All the following code is to format the info for exporting to pdf
+    projects = filter_none_strings(unfiltered_projects)
 
-#Name extraction
-name_prompt = """\"\"\"
-""" + name + """
-\"\"\"
+    act1 = INFOLIST.get('activity-one', 'none')
+    act2 = INFOLIST.get('activity-two', 'none')
+    act3 = INFOLIST.get('activity-three', 'none')
+    act4 = INFOLIST.get('activity-four', 'none')
 
-Respond in ONLY 2 words with the name in the above text without punctuation.
-"""
-extracted_name = generate(name_prompt, 10)
+    unfiltered_activities = [act1, act2, act3, act4]
 
-#Contact info formatting
-contact_prompt = """\"\"\"
-""" + location + """ """ + phone_number + """ """ + email + """ """ + important_links + """
-\"\"\"
+    activities = filter_none_strings(unfiltered_activities)
 
-Format the above information into the below format:
+    print("CHECKPOINT 1 PASSED!")
+    print(len(activities))
+    print()
 
-\"\"\"
-City, State Abbreviation, Country | +1 (xxx) xxx-xxxx | Personal Email | Important Link | Important Link
-\"\"\"
+    #All the following code is to format the info for exporting to pdf
 
-The links shouldn't be linked and if the full home address is provided then only take the city and get the state and country from that. Return it without saying anything else and not in code.
-"""
-formatted_contact_info = generate(contact_prompt, 80)
-
-#Professional summary synthesis
-summary_prompt = """\"\"\"\nEducation History:\n""" + education + """\nSkills:\n""" + skills + """\nWork Experience:\n"""
-
-for i in experiences:
-    summary_prompt += i + "\n"
-
-summary_prompt += """\nProjects:\n"""
-
-for i in projects:
-    summary_prompt += i + "\n"
-
-summary_prompt += """\nActivities and Volunteer Experience:\n"""
-
-for i in activities:
-    summary_prompt += i + "\n"
-
-summary_prompt += """\n\"\"\"
-
-Write me a 2 sentence professional summary for my resume. Make sure to include my school, major, and expected year of graduation, and a very very brief abstraction of what I'm interested in and say that I'm seeking jobs.
-"""
-synthesized_summary = generate(summary_prompt, 100)
-
-#Skills organization
-skills_prompt = """\"\"\"\n""" + skills + """\n\"\"\"
-
-Using the list of skills above, create a resume skills section in the same format as provided below:
-
-\"\"\"
-X: Skill 1, Skill 2, Skill 3
-Y: Skill 1, Skill 2, Skill 3
-Z: Skill 1, Skill 2, Skill 3
-\"\"\"
-
-The skill sections can include things such as Languages, Competencies, Professional Skills, Certifications, and Licenses. Make sure the similar skills are on the same line as the category title. Return it without saying anything else.
-"""
-organized_skills = generate(skills_prompt, 100)
-
-#Education formatting
-education_prompt = """\"\"\"\n""" + education + """\n\"\"\"
-
-Format the above information into the below format:
-
-\"\"\"
-Type of Degree (Only Abbreviation), Major (Only full form), School/Institution
-- GPA, achievements, honors, awards (everything in ONLY 1 bullet point)
-- Relevant coursework: Course 1, Course 2, etc.
-\"\"\"
-
-If there is no information on GPA, achievements, honors, or awards then only include bullet point 2. Make sure there is type of degree, major, and school. Return it without saying anything else and not in code.
-"""
-education_date_prompt = """\"\"\"\n""" + education + """\n\"\"\"
-
-Extract the above graduation date into the same format as below:
-
-\"\"\"
-Expected Feb 2005
-\"\"\"
-
-Return EXACTLY 3 words including expected and no punctuation.
-"""
-formatted_education = generate(education_prompt, 75)
-extracted_education_date = generate(education_date_prompt, 10)
-
-#Experience formatting
-def format_experience(EXPERIENCE):
-    experience_prompt = """\"\"\"\n""" + EXPERIENCE + """\n\"\"\"
-
-    Format the above information into a resume work experience like the below format with each thing on a different line:
-
-    \"\"\"
-    ONLY Company Name
-    Position/Role
-    ONLY 3 descriptive bullet points talking about the experience with buzzwords
+    #Name extraction
+    name_prompt = """\"\"\"
+    """ + name + """
     \"\"\"
 
-    The bullet points should end without periods. Return it without saying anything else.
+    Respond in ONLY 2 words with the name in the above text without punctuation.
     """
+    extracted_name = generate(name_prompt, 10)
 
-    experience_date_prompt = """\"\"\"\n""" + EXPERIENCE + """\n\"\"\"
+    print("CHECKPOINT 2 PASSED!")
+    print(extracted_name)
+    print()
 
-    Format the above dates of the experience into a 3 letter month and year with a dash separating them like below:
+    #Contact info formatting
+    contact_prompt = """\"\"\"
+    """ + location + """ """ + phone_number + """ """ + email + """ """ + important_links + """
+    \"\"\"
+
+    Format the above information into the below format:
 
     \"\"\"
-    Jan 2005 - Sep 2006
+    City, State Abbreviation, Country | +1 (xxx) xxx-xxxx | Personal Email | Important Link | Important Link
     \"\"\"
 
-    Return it without saying anything else.
+    The links shouldn't be linked and if the full home address is provided then only take the city and get the state and country from that. Return it without saying anything else and not in code.
     """
+    formatted_contact_info = generate(contact_prompt, 80)
 
-    unprocessed_experience = generate(experience_prompt, 100)
+    print("CHECKPOINT 3 PASSED!")
+    print(formatted_contact_info)
+    print()
 
-    lines = unprocessed_experience.split("\n")
-    filtered_lines = []
-    for line in lines:
-        if not len(line.strip()) == 0 and not '"""' in line:
-            filtered_lines.append(line)
+    #Professional summary synthesis
+    summary_prompt = """\"\"\"\nEducation History:\n""" + education + """\nSkills:\n""" + skills + """\nWork Experience:\n"""
 
+    for i in experiences:
+        summary_prompt += i + "\n"
 
-    experience_list = ["\n".join(filtered_lines), generate(experience_date_prompt, 10)]
+    summary_prompt += """\nProjects:\n"""
 
-    return experience_list
+    for i in projects:
+        summary_prompt += i + "\n"
 
-formatted_experiences = []
+    summary_prompt += """\nActivities and Volunteer Experience:\n"""
 
-for work in experiences:
-    formatted_experiences.append(format_experience(work))
+    for i in activities:
+        summary_prompt += i + "\n"
 
-#Project formatting
-def format_project(PROJECT):
-    project_prompt = """\"\"\"\n""" + PROJECT + """\n\"\"\"
+    summary_prompt += """\n\"\"\"
 
-    Format the above information into a resume project experience like the below format with each thing on a different line:
+    Write me a 2 sentence professional summary for my resume similar to the example below. Make it less than 100 tokens, and it should be very vague and high level and shouldn't list my coursework, skills, projects, experiences, or activities. Start with "I am a..." and don't include any quotations.
 
     \"\"\"
-    ONLY Project Name
-    ONLY 3 descriptive bullet points talking about the experience with buzzwords
+    I am a Computer Science freshman at University of Illinois Urbana-Champaign with strong fundamentals in object-oriented programming, machine learning models, and front-end web development. I am especially passionate about tackling everyday problems with AI solutions and I am looking for opportunities to learn about and apply new technologies.
     \"\"\"
-
-    The bullet points should end without periods. Return it without saying anything else.
     """
+    synthesized_summary = generate(summary_prompt, 100)
 
-    project_date_prompt = """\"\"\"\n""" + PROJECT + """\n\"\"\"
+    print("CHECKPOINT 4 PASSED!")
+    print(synthesized_summary)
+    print()
 
-    Format the above dates of the experience into a 3 letter month and year with a dash separating them like below:
+    #Skills organization
+    skills_prompt = """\"\"\"\n""" + skills + """\n\"\"\"
+
+    Using the list of skills above, create a resume skills section in the same format as provided below:
 
     \"\"\"
-    Jan 2005 - Sep 2006
+    X: Skill 1, Skill 2, Skill 3
+    Y: Skill 1, Skill 2, Skill 3
+    Z: Skill 1, Skill 2, Skill 3
     \"\"\"
 
-    Return it without saying anything else.
+    The skill sections can include things such as Languages, Competencies, Professional Skills, Certifications, and Licenses. Make sure the similar skills are on the same line as the category title. Return it without saying anything else.
     """
+    organized_skills = generate(skills_prompt, 100)
 
-    unprocessed_project = generate(project_prompt, 100)
+    print("CHECKPOINT 5 PASSED!")
+    print(organized_skills)
+    print()
 
-    lines = unprocessed_project.split("\n")
-    filtered_lines = []
-    for line in lines:
-        if not len(line.strip()) == 0 and not '"""' in line:
-            filtered_lines.append(line)
+    #Education formatting
+    education_prompt = """\"\"\"\n""" + education + """\n\"\"\"
+
+    Format the above information into the below format:
+
+    \"\"\"
+    Type of Degree (Only Abbreviation), Major (Only full form), School/Institution
+    - GPA, achievements, honors, awards (everything in ONLY 1 bullet point)
+    - Relevant coursework: Course 1, Course 2, etc.
+    \"\"\"
+
+    If there is no information on GPA, achievements, honors, or awards then only include bullet point 2. Make sure there is type of degree, major, and school. Return it without saying anything else and not in code.
+    """
+    education_date_prompt = """\"\"\"\n""" + education + """\n\"\"\"
+
+    Extract the above graduation date into the same format as below:
+
+    \"\"\"
+    Expected Feb 2005
+    \"\"\"
+
+    Return EXACTLY 3 words including expected and no punctuation.
+    """
+    formatted_education = generate(education_prompt, 75)
+    extracted_education_date = generate(education_date_prompt, 10)
+
+    print("CHECKPOINT 6 PASSED!")
+    print(extracted_education_date, formatted_education)
+    print()
+
+    #Experience formatting
+    def format_experience(EXPERIENCE):
+        experience_prompt = """\"\"\"\n""" + EXPERIENCE + """\n\"\"\"
+
+        Format the above information into a resume work experience like the below format with each thing on a different line:
+
+        \"\"\"
+        ONLY Company Name
+        Position/Role
+        ONLY 3 descriptive bullet points talking about the experience with buzzwords
+        \"\"\"
+
+        The bullet points should end without periods. Return it without saying anything else.
+        """
+
+        experience_date_prompt = """\"\"\"\n""" + EXPERIENCE + """\n\"\"\"
+
+        Format the above dates of the experience into a 3 letter month and year with a dash separating them like below:
+
+        \"\"\"
+        Jan 2005 - Sep 2006
+        \"\"\"
+
+        Return it without saying anything else.
+        """
+
+        unprocessed_experience = generate(experience_prompt, 100)
+
+        lines = unprocessed_experience.split("\n")
+        filtered_lines = []
+        for line in lines:
+            if not len(line.strip()) == 0 and not '"""' in line:
+                filtered_lines.append(line)
 
 
-    project_list = ["\n".join(filtered_lines), generate(project_date_prompt, 10)]
+        experience_list = ["\n".join(filtered_lines), generate(experience_date_prompt, 10)]
 
-    return project_list
+        return experience_list
 
-formatted_projects = []
+    formatted_experiences = []
 
-for project in projects:
-    formatted_projects.append(format_project(project))
+    for work in experiences:
+        formatted_experiences.append(format_experience(work))
 
-#Activity formatting
-formatted_activities = []
+    print("CHECKPOINT 7 PASSED!")
+    print(len(formatted_experiences))
+    print()
 
-for activity in activities:
-    formatted_activities.append(format_experience(activity))
+    #Project formatting
+    def format_project(PROJECT):
+        project_prompt = """\"\"\"\n""" + PROJECT + """\n\"\"\"
 
-#Compile all the information
-FULLCONTENTLIST = {'Name': extracted_name,
-                   'Contact Info': formatted_contact_info,
-                   'Summary': synthesized_summary,
-                   'Skills': organized_skills,
-                   'Education': formatted_education,
-                   'Education Date': extracted_education_date,
-                   'Work Experiences': formatted_experiences}
+        Format the above information into a resume project experience like the below format with each thing on a different line:
 
-if not len(formatted_projects) == 0:
-    FULLCONTENTLIST['Projects'] = formatted_projects
+        \"\"\"
+        ONLY Project Name
+        ONLY 3 descriptive bullet points talking about the experience with buzzwords
+        \"\"\"
 
-if not len(formatted_activities) == 0:
-    FULLCONTENTLIST['Activities'] = formatted_activities
+        The bullet points should end without periods. Return it without saying anything else.
+        """
 
-#Build the PDF
-createPDF(FULLCONTENTLIST)
+        project_date_prompt = """\"\"\"\n""" + PROJECT + """\n\"\"\"
+
+        Format the above dates of the experience into a 3 letter month and year with a dash separating them like below:
+
+        \"\"\"
+        Jan 2005 - Sep 2006
+        \"\"\"
+
+        Return it without saying anything else.
+        """
+
+        unprocessed_project = generate(project_prompt, 100)
+
+        lines = unprocessed_project.split("\n")
+        filtered_lines = []
+        for line in lines:
+            if not len(line.strip()) == 0 and not '"""' in line:
+                filtered_lines.append(line)
+
+
+        project_list = ["\n".join(filtered_lines), generate(project_date_prompt, 10)]
+
+        return project_list
+
+    formatted_projects = []
+
+    for project in projects:
+        formatted_projects.append(format_project(project))
+
+    print("CHECKPOINT 8 PASSED!")
+    print(len(formatted_projects))
+    print()
+
+    #Activity formatting
+    formatted_activities = []
+
+    for activity in activities:
+        formatted_activities.append(format_experience(activity))
+
+    print("CHECKPOINT 9 PASSED!")
+    print(len(formatted_activities))
+    print()
+
+    #Compile all the information
+    FULLCONTENTLIST = {'Name': extracted_name,
+                    'Contact Info': formatted_contact_info,
+                    'Summary': synthesized_summary,
+                    'Skills': organized_skills,
+                    'Education': formatted_education,
+                    'Education Date': extracted_education_date,
+                    'Work Experiences': formatted_experiences}
+
+    if not len(formatted_projects) == 0:
+        FULLCONTENTLIST['Projects'] = formatted_projects
+
+    if not len(formatted_activities) == 0:
+        FULLCONTENTLIST['Activities'] = formatted_activities
+
+    #Build the PDF
+    createPDF(FULLCONTENTLIST)

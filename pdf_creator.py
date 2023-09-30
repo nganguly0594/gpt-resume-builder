@@ -52,12 +52,22 @@ def createPDF(CONTENTLIST):
     #Creates a list of flowable items
     flowables = []
 
+    #Handles an error with quotations
+    def filter_string(input_string):
+        lines = input_string.splitlines()
+
+        filtered_lines = [line for line in lines if '"""' not in line]
+
+        result_string = '\n'.join(filtered_lines)
+
+        return result_string
+
     #Adds the name of the user
-    flowables.append(Paragraph(CONTENTLIST['Name'], style=custom_styles['Title']))
+    flowables.append(Paragraph(filter_string(CONTENTLIST['Name']), style=custom_styles['Title']))
     flowables.append(Spacer(1, 11))
 
     #Adds the user's contact info
-    contact_parts = CONTENTLIST['Contact Info'].split(" | ")
+    contact_parts = filter_string(CONTENTLIST['Contact Info']).split(" | ")
     
     new_parts = []
 
@@ -77,14 +87,14 @@ def createPDF(CONTENTLIST):
     #Adds the user's professional summary
     flowables.append(Paragraph("PROFESSIONAL SUMMARY", style=custom_styles['SectionTitle']))
     flowables.append(Spacer(1, 5))
-    flowables.append(Paragraph(CONTENTLIST['Summary'], style=custom_styles['Regular']))
+    flowables.append(Paragraph(filter_string(CONTENTLIST['Summary']).replace('"', ''), style=custom_styles['Regular']))
     flowables.append(Spacer(1, 11))
 
     #Adds the skills
     flowables.append(Paragraph("SKILLS", style=custom_styles['SectionTitle']))
     flowables.append(Spacer(1, 5))
     
-    for skill in CONTENTLIST['Skills'].split("\n"):
+    for skill in filter_string(CONTENTLIST['Skills']).split("\n"):
         flowables.append(Paragraph(skill, style=custom_styles['Regular']))
     
     flowables.append(Spacer(1, 11))
@@ -99,20 +109,11 @@ def createPDF(CONTENTLIST):
     education_table = Table(education_data, colWidths=[5.9 * inch, 1.6 * inch])
     flowables.append(education_table)
 
-    education_bullets = []
-
     for i in range(len(education_parts)):
         if i == 0:
             continue
-        education_bullets.append(ListItem(Paragraph(education_parts[i][2:], custom_styles['Regular']), bulletColor='black'))
+        flowables.append(Paragraph(education_parts[i][2:], custom_styles['Regular'], bulletText='•'))
 
-    education_info = ListFlowable(
-    education_bullets,
-    bulletType='bullet',
-    start='circle',
-    leftIndent=10)
-
-    flowables.append(education_info)
     flowables.append(Spacer(1, 11))
 
     #Adds the experiences section
@@ -128,21 +129,12 @@ def createPDF(CONTENTLIST):
 
         flowables.append(Paragraph(work_parts[1], style=custom_styles['Italic']))
 
-        work_bullets = []
-
         for i in range(len(work_parts)):
             if i == 0 or i == 1:
                 continue
 
-            work_bullets.append(ListItem(Paragraph(work_parts[i][2:], custom_styles['Regular']), bulletColor='black'))
+            flowables.append(Paragraph(work_parts[i][2:], custom_styles['Regular'], bulletText='•'))
 
-        work_info = ListFlowable(
-        work_bullets,
-        bulletType='bullet',
-        start='circle',
-        leftIndent=10)
-
-        flowables.append(work_info)
         flowables.append(Spacer(1, 11))
 
     #Adds the projects section
@@ -157,20 +149,11 @@ def createPDF(CONTENTLIST):
             project_table = Table(project_data, colWidths=[5.9 * inch, 1.6 * inch])
             flowables.append(project_table)
 
-            project_bullets = []
-
             for i in range(len(project_parts)):
                 if i == 0:
                     continue
-                project_bullets.append(ListItem(Paragraph(project_parts[i][2:], custom_styles['Regular']), bulletColor='black'))
+                flowables.append(Paragraph(project_parts[i][2:], custom_styles['Regular'], bulletText='•'))
 
-            project_info = ListFlowable(
-            project_bullets,
-            bulletType='bullet',
-            start='circle',
-            leftIndent=10)
-
-            flowables.append(project_info)
             flowables.append(Spacer(1, 11))
 
     #Adds the activities section
@@ -187,20 +170,11 @@ def createPDF(CONTENTLIST):
 
             flowables.append(Paragraph(activity_parts[1], style=custom_styles['Italic']))
 
-            activity_bullets = []
-
             for i in range(len(activity_parts)):
                 if i == 0 or i == 1:
                     continue
-                activity_bullets.append(ListItem(Paragraph(activity_parts[i][2:], custom_styles['Regular']), bulletColor='black'))
+                flowables.append(Paragraph(activity_parts[i][2:], custom_styles['Regular'], bulletText='•'))
 
-            activity_info = ListFlowable(
-            activity_bullets,
-            bulletType='bullet',
-            start='circle',
-            leftIndent=10)
-
-            flowables.append(activity_info)
             flowables.append(Spacer(1, 11))
 
     pdf.build(flowables)
