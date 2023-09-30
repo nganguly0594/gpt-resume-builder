@@ -1,5 +1,5 @@
 #api key
-config.py
+api_key.txt
 
 #ignore
 __pycache__/

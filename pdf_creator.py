@@ -1,8 +1,8 @@
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, PageTemplate, Frame, Spacer, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, PageTemplate, Frame, Spacer, Table
 from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import Paragraph, ListFlowable, ListItem
+from reportlab.platypus import Paragraph
 
 def createPDF(CONTENTLIST):
     #Sets all the font sizes and types
@@ -56,7 +56,7 @@ def createPDF(CONTENTLIST):
     def filter_string(input_string):
         lines = input_string.splitlines()
 
-        filtered_lines = [line for line in lines if '"""' not in line]
+        filtered_lines = [line for line in lines if '"' not in line and not len(line.strip()) == 0]
 
         result_string = '\n'.join(filtered_lines)
 
