@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>GPT Resume Builder</title>
+{% endblock %}
+
+{% block body %}
+<div class="info-section">
+    <h1>Build Your Resume</h1>
+    <form action="/" method="POST">
+        <h3>Answer the 10 questions below to create your resume!</h3>
+        <h5>* = Required Field</h5>
+        
+        <section class="full-name">
+            <label for="name">1. What is your first and last name?*</label>
+            <textarea name="name" id="name" placeholder="Name" required></textarea>
+        </section>
+
+        <section class="location">
+            <label for="city">2. Which city are you located in?*</label>
+            <textarea name="city" id="city" placeholder="Location" required></textarea>
+        </section>
+
+        <section class="phone-number">
+            <label for="phone">3. What is your phone number?*</label>
+            <textarea name="phone" id="phone" placeholder="Phone Number" required></textarea>
+        </section>
+            
+        <section class="email-address">
+            <label for="email">4. What is your email?*</label>
+            <textarea name="email" id="email" placeholder="Email Address" required></textarea>
+        </section>
+            
+        <section class="important-links">
+            <label for="links">
+                5. Any important links? List them out! (LinkedIn, Github, Facebook, Personal Website, etc.)
+            </label>
+            <textarea name="links" id="links" placeholder="Important Links"></textarea>
+        </section>
+            
+        <section class="important-skills">
+            <label for="skills">
+                6. What skills do you have? (These can include hard skills like foreign languages, 
+                programming languages, experience using certain interfaces, etc., soft skills like 
+                communication, critical thinking, time management, etc., or certifications and licenses 
+                like CPR training, programming certification, etc.)*
+            </label>
+            <textarea name="skills" id="skills" placeholder="Important Skills" required></textarea>
+        </section>
+            
+        <section class="education-history">
+            <label for="education">
+                7. What is your current education? Make sure to include your school name, expected month and
+                year of graduation (Ex. May 2025), major and degree type (Ex. B.S. in Computer Science),
+                relevant courses (Ex. Data Structures), and achievements and awards (Ex. Dean'sList).*
+            </label>
+            <textarea name="education" id="education" placeholder="Education History" required></textarea>
+        </section>
+
+        <fieldset class="work-experience">
+            <legend>
+                8. What experience do you have? This can be work experiences or anything similar related
+                to your major that you want to showcase. Make sure to include company name, month and year
+                worked at the position or specify if still working, role at company, and a few sentences
+                describing your job. (Tip: Include buzzwords such as the technologies or skills you used,
+                or statistics about your work's efficacy/accuracy, etc.)
+            </legend>
+            <label for="experience-one">Experience 1:*</label>
+            <textarea name="experience-one" id="experience-one" placeholder="First Experience" required></textarea>
+            <br>
+
+            <label for="experience-two">Experience 2:</label>
+            <textarea name="experience-two" id="experience-two" placeholder="Second Experience"></textarea>
+            <br>
+
+            <label for="experience-three">Experience 3:</label>
+            <textarea name="experience-three" id="experience-three" placeholder="Third Experience"></textarea>
+            <br>
+
+            <label for="experience-four">Experience 4:</label>
+            <textarea name="experience-four" id="experience-four" placeholder="Fourth Experience"></textarea>
+        </fieldset>
+
+        <fieldset class="personal-projects">
+            <legend>
+                9. What projects have you completed? Make sure to include project name, month and year
+                worked on the project or specify if still working, and a few sentences describing the project.
+                Write a separate paragraph per project. (Tip: Include buzzwords such as the technologies or
+                skills you used, or statistics about your project's efficacy/accuracy, etc.)
+            </legend>
+            <label for="project-one">Project 1:</label>
+            <textarea name="project-one" id="project-one" placeholder="First Project"></textarea>
+            <br>
+
+            <label for="project-two">Project 2:</label>
+            <textarea name="project-two" id="project-two" placeholder="Second Project"></textarea>
+            <br>
+
+            <label for="project-three">Project 3:</label>
+            <textarea name="project-three" id="project-three" placeholder="Third Project"></textarea>
+            <br>
+
+            <label for="project-four">Project 4:</label>
+            <textarea name="project-four" id="project-four" placeholder="Fourth Project"></textarea>
+        </fieldset>
+
+        <fieldset class="activities-volunteering">
+            <legend>
+                10. What activities or volunteer experiences do you have? Make sure to include name of
+                activity/experience, month and years participating or specify if ongoing, and a few sentences
+                describing the activity/experience. (Tip: Include buzzwords such as the technologies or skills
+                you used, or statistics about your activity/experience's efficacy/accuracy, etc.)
+            </legend>
+            <label for="activity-one">Activity 1:</label>
+            <textarea name="activity-one" id="activity-one" placeholder="First Activity"></textarea>
+            <br>
+
+            <label for="activity-two">Activity 2:</label>
+            <textarea name="activity-two" id="activity-two" placeholder="Second Activity"></textarea>
+            <br>
+
+            <label for="activity-three">Activity 3:</label>
+            <textarea name="activity-three" id="activity-three" placeholder="Third Activity"></textarea>
+            <br>
+
+            <label for="activity-four">Activity 4:</label>
+            <textarea name="activity-four" id="activity-four" placeholder="Fourth Activity"></textarea>
+        </fieldset>
+
+        <input type="submit" id="submit" value="Get Resume">
+    </form>
+</div>
+<div class="display">
+    <img src="{{ url_for('static', filename='resume.jpg') }}" alt="Resume Example">
+</div>
+{% endblock %}
