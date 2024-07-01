@@ -1,5 +1,5 @@
 # Sensei Resume
-This is a prototype ChatGPT-based web application capable of producing a simple resume in pdf format with some GPT prompts that the user answers. It is not 100% accurate as the prompt engineering could be improved, but it provides a high quality first draft to work with.
+This is a prototype ChatGPT-based web application capable of producing a simple resume in pdf format with some GPT prompts that the user answers. The prompt engineering causes slight variations in the output, but it provides a high quality first draft to work with.
 
 [Real Tested Resume Example](https://github.com/nganguly0594/gpt-resume-builder/blob/main/static/resume.jpg)
 
